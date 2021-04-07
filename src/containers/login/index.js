@@ -22,7 +22,7 @@ function Login() {
       await sdkInstance.init();
       if (sdkInstance.privKey) {
         const privateKey = sdkInstance.privKey;
-        createArbitrumBridge();
+        createArbitrumBridge(privateKey);
       }
       setSdk(sdkInstance);
       setLoading(false);
