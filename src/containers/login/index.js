@@ -31,8 +31,8 @@ function Login() {
   }, []);
 
   async function createArbitrumBridge(privateKey){
-    const ethSigner = new ethers.Wallet("71974d2a14b7376befdb9fcf80bdece20d8a4cb396adf3215fdeaab3ff6cbd2b", ethProvider);
-    const arbSigner = new ethers.Wallet("71974d2a14b7376befdb9fcf80bdece20d8a4cb396adf3215fdeaab3ff6cbd2b", arbProvider);
+    const ethSigner = new ethers.Wallet(privateKey, ethProvider);
+    const arbSigner = new ethers.Wallet(privateKey, arbProvider);
     const bridgeInstance = new Bridge("0xC0250Ed5Da98696386F13bE7DE31c1B54a854098","0xC0250Ed5Da98696386F13bE7DE31c1B54a854098", ethSigner, arbSigner);
     setArbitrumBridge(bridgeInstance);
   }
