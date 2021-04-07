@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import OpenLogin from "openlogin";
 import AccountInfo  from "../../components/AccountInfo";
-import { useArbTokenBridge } from "token-bridge-sdk";
 import { Bridge } from "arb-ts";
 import  * as ethers from "ethers";
+
+import "./style.scss";
 const ethProvider = ethers.providers.getDefaultProvider("https://kovan.infura.io/v3/65982ef7e3f24b3586823483ebdc99e0");
 const arbProvider = new ethers.providers.JsonRpcProvider("https://kovan4.arbitrum.io/rpc");
 
