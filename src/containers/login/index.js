@@ -5,14 +5,22 @@ import { Bridge } from "arb-ts";
 import  * as ethers from "ethers";
 
 import "./style.scss";
-const ethProvider = ethers.providers.getDefaultProvider("https://kovan.infura.io/v3/65982ef7e3f24b3586823483ebdc99e0");
-const arbProvider = new ethers.providers.JsonRpcProvider("https://kovan4.arbitrum.io/rpc");
+
+const kovan4_testnet_config = {
+  ethRPC: "https://kovan.infura.io/v3/65982ef7e3f24b3586823483ebdc99e0",
+  arbRPC: 'https://kovan4.arbitrum.io/rpc',  
+  erc20BridgeAddress: '0x2948ac43e4AfF448f6af0F7a11F18Bb6062dd271',
+  arbTokenBridgeAddress: '0x64b92d4f02cE1b4BDE2D16B6eAEe521E27f28e07',
+};
+
+const ethProvider = ethers.providers.getDefaultProvider(kovan4_testnet_config.ethRPC);
+const arbProvider = new ethers.providers.JsonRpcProvider(kovan4_testnet_config.arbRPC);
+
 
 function Login() {
   const [loading, setLoading] = useState(false);
   const [openlogin, setSdk] = useState(undefined);
-  const [bridgeDetails, setArbitrumBridge] = useState(null);
-  const [walletInfo, setUserAccountInfo] = useState(null);
+  const [bridgeInstance, setArbitrumBridge] = useState(null);
   useEffect(() => {
     setLoading(true);
     async function initializeOpenlogin() {
@@ -34,7 +42,7 @@ function Login() {
   async function createArbitrumBridge(privateKey){
     const ethSigner = new ethers.Wallet(privateKey, ethProvider);
     const arbSigner = new ethers.Wallet(privateKey, arbProvider);
-    const bridgeInstance = new Bridge("0xC0250Ed5Da98696386F13bE7DE31c1B54a854098","0xC0250Ed5Da98696386F13bE7DE31c1B54a854098", ethSigner, arbSigner);
+    const bridgeInstance = new Bridge(kovan4_testnet_config.erc20BridgeAddress,kovan4_testnet_config.arbTokenBridgeAddress, ethSigner, arbSigner);
     setArbitrumBridge(bridgeInstance);
   }
 
@@ -71,11 +79,10 @@ function Login() {
         {
           (openlogin && openlogin.privKey) ?
             <AccountInfo
-              bridgeDetails={bridgeDetails}
+              bridgeDetails={bridgeInstance}
               handleLogout={handleLogout}
               loading={loading}
               privKey={openlogin?.privKey}
-              walletInfo={walletInfo}
             /> :
             <div className="loginContainer">
                 <h1 style={{ textAlign: "center" }}>Openlogin x Arbitrum</h1>
