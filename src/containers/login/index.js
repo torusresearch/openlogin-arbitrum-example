@@ -22,13 +22,18 @@ function Login() {
   const [openlogin, setSdk] = useState(undefined);
   const [bridgeInstance, setArbitrumBridge] = useState(null);
   useEffect(() => {
+    console.log("process.env.REACT_APP_SIG", process.env.REACT_APP_SIG, process.env.REACT_APP_ORIGIN)
     setLoading(true);
+    let originData = {
+      [`"${process.env.REACT_APP_ORIGIN}"`]: process.env.REACT_APP_SIG
+    }
+    console.log("rogin", originData);
     async function initializeOpenlogin() {
       const sdkInstance = new OpenLogin({
-        clientId: "BL06YSvMaMDKFD4KY_-UDo5UxlYrdNkOQ2YG08OgmSYE15Xj7RURlD-UtP74RzRsoyUAyDUT1K8FK9USa6Xxsvs", // your project id
+        clientId: process.env.REACT_APP_CLIENT_ID, // your project id
         network: "testnet",
         originData: {
-          "https://arbitrum-openlogin.herokuapp.com" : "MEUCIQCZziiTseA67Wckk8WlH-DN7g7O2i0mRw8bUKHpIfcVJQIgYdT65i9FllLjtNMd-PWRmD95feagDCMpd6g0hzYlF5M"
+          [`"${process.env.REACT_APP_ORIGIN}"`]: process.env.REACT_APP_SIG
         }
       });
       await sdkInstance.init();
@@ -57,6 +62,7 @@ function Login() {
         loginProvider: "google",
         redirectUrl: `${window.origin}`,
       });
+      await createArbitrumBridge(privKey)
       setLoading(false)
     } catch (error) {
       console.log("error", error);
