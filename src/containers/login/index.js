@@ -25,8 +25,11 @@ function Login() {
     setLoading(true);
     async function initializeOpenlogin() {
       const sdkInstance = new OpenLogin({
-        clientId: "YOUR_PROJECT_ID", // your project id
+        clientId: "BL06YSvMaMDKFD4KY_-UDo5UxlYrdNkOQ2YG08OgmSYE15Xj7RURlD-UtP74RzRsoyUAyDUT1K8FK9USa6Xxsvs", // your project id
         network: "testnet",
+        originData: {
+          "https://arbitrum-openlogin.herokuapp.com" : "MEUCIQCZziiTseA67Wckk8WlH-DN7g7O2i0mRw8bUKHpIfcVJQIgYdT65i9FllLjtNMd-PWRmD95feagDCMpd6g0hzYlF5M"
+        }
       });
       await sdkInstance.init();
       if (sdkInstance.privKey) {
