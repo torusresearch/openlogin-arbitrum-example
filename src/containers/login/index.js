@@ -24,16 +24,13 @@ function Login() {
   useEffect(() => {
     console.log("process.env.REACT_APP_SIG", process.env.REACT_APP_SIG, process.env.REACT_APP_ORIGIN)
     setLoading(true);
-    let originData = {
-      [`"${process.env.REACT_APP_ORIGIN}"`]: process.env.REACT_APP_SIG
-    }
-    console.log("rogin", originData);
+   
     async function initializeOpenlogin() {
       const sdkInstance = new OpenLogin({
         clientId: process.env.REACT_APP_CLIENT_ID, // your project id
         network: "testnet",
         originData: {
-          [`"${process.env.REACT_APP_ORIGIN}"`]: process.env.REACT_APP_SIG
+          "https://arbitrum-openlogin.herokuapp.com": process.env.REACT_APP_SIG
         }
       });
       await sdkInstance.init();
